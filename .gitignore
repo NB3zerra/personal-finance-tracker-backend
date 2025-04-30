@@ -28,7 +28,7 @@ Thumbs.db
 .env.*
 
 # Ignore json files in any directory
-**/*.json
+*.json
 
 # Ignore compiled files
 *.dll
