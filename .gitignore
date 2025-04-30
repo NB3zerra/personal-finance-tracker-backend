@@ -1,8 +1,6 @@
 # Ignore build output directories
-bin/
-
-# Ignore output directories
-obj/
+**/obj/
+**/bin/
 
 # Ignore NuGet packages
 *.nupkg
