@@ -1,10 +1,11 @@
-using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Identity.Entities;
 
 namespace FinanceTracker.Infra.Interfaces
 {
     public interface IUserRepository
     {
-        Task<UserEntity> GetUserByIdAsync(Guid id);
+        Task<UserEntity> GetUserByIdAsync(string id);
+        Task<UserEntity> GetByEmailAsync(string email);
         Task AddAsync(UserEntity user);
     }
 }

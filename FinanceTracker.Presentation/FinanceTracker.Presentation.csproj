@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanceTracker.Infra\FinanceTracker.Infra.csproj" />
+    <ProjectReference Include="..\FinanceTracker.Application\FinanceTracker.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,11 @@
-using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Interfaces;
-using Microsoft.Extensions.Configuration;
+using FinanceTracker.Domain.Identity.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 
-namespace FinanceTracker.Infra.Services
+namespace FinanceTracker.Infra.Identity.Services
 {
     public class JwtTokenGenerator
     {
@@ -31,8 +29,8 @@ namespace FinanceTracker.Infra.Services
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "yourdomain.com",
-                audience: "yourdomain.com",
+                issuer: "financetracker.com",
+                audience: "financetracker.com",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);

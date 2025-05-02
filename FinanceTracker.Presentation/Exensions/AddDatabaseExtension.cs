@@ -1,6 +1,3 @@
-using FinanceTracker.Infra.Interfaces;
-using FinanceTracker.Infra.Repositories;
-using FinanceTracker.Infra.Settings;
 using MongoDB.Driver;
 
 namespace FinanceTracker.Presentation.Exensions
@@ -14,8 +11,6 @@ namespace FinanceTracker.Presentation.Exensions
             
             services.AddScoped(sp =>
                 sp.GetRequiredService<IMongoClient>().GetDatabase("FinanceTracker"));
-
-            
             
             return services;
         }

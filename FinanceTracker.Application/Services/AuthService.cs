@@ -1,5 +1,7 @@
-using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Interfaces;
+using FinanceTracker.Domain.Identity.Entities;
+using FinanceTracker.Domain.Identity.Interfaces;
+using FinanceTracker.Infra.Identity.Services;
+using FinanceTracker.Infra.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace FinanceTracker.Application.Services;
@@ -8,9 +10,14 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<UserEntity> _passwordHasher;
-    private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly JwtTokenGenerator _jwtTokenGenerator;
 
-    public AuthService(IUserRepository userRepository, IPasswordHasher<UserEntity> passwordHasher, IJwtTokenGenerator jwtTokenGenerator)
+    public AuthService
+    (
+        IUserRepository userRepository,
+        IPasswordHasher<UserEntity> passwordHasher,
+        JwtTokenGenerator jwtTokenGenerator
+    )
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
@@ -28,9 +35,20 @@ public class AuthService : IAuthService
         return _jwtTokenGenerator.GenerateToken(user);
     }
 
-    public async Task RegisterAsync(UserEntity user, string password)
+    public async Task RegisterAsync(string user, string password, string role)
     {
-        user.PasswordHash = _passwordHasher.HashPassword(user, password);
-        await _userRepository.AddAsync(user);
+        var existingUser = await _userRepository.GetByEmailAsync(user);
+        if (existingUser != null)
+        {
+            throw new InvalidOperationException("User already exists.");
+        }
+        var hashedPassword = _passwordHasher.HashPassword(new UserEntity(), password);
+        var newUser = new UserEntity
+        {
+            Email = user,
+            PasswordHash = hashedPassword,
+            Role = role
+        };
+        await _userRepository.AddAsync(newUser);
     }
 }
