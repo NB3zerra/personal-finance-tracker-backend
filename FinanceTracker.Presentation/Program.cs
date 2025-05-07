@@ -12,6 +12,7 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.SetupCors();
 
 var app = builder.Build();
 
@@ -21,6 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
